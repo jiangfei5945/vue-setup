@@ -1,5 +1,5 @@
 # vue-setup
-
+the repo is a demo for vue 2.7, which has backported some features (eg. setup) from vue 3.
 ## Project setup
 ```
 npm install
