@@ -1,25 +1,34 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    {{ foo }}
+    foo:{{ foo }}
+    <div>foo*2: {{ twiceFoo }}</div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, toRefs } from "vue";
+import fooSetup from "./composables/foo";
+import msgSetup from "./composables/msg";
 
 export default defineComponent({
   name: "Helloworld",
-  props: { msg: { type: String } },
-  setup() {
-    let foo = ref(0);
-    setInterval(() => {
-      foo.value++;
-    }, 1000);
+  props: { msg: { type: String, default: "" } },
+  setup(props) {
+    const { msg } = toRefs(props);
+    msgSetup(msg);
+
+    const { foo, twiceFoo } = fooSetup();
+
     onMounted(() => {
-      console.log("*******onMounted");
+      console.log("*******onMounted 1");
     });
-    return { foo };
+
+    onMounted(() => {
+      console.log("*******onMounted 2");
+    });
+
+    return { foo, twiceFoo };
   },
 });
 </script>

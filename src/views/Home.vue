@@ -1,16 +1,24 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <HelloWorld :msg="msg" />
+    <van-button type="primary" @click="changeMsg">改变</van-button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 
 export default defineComponent({
   name: "Home",
   components: { HelloWorld },
+  setup() {
+    let msg = ref("hello");
+    const changeMsg = () => {
+      msg.value += " 12";
+    };
+    return { changeMsg, msg };
+  },
 });
 </script>
