@@ -4,12 +4,15 @@
     <HelloWorld :msg="msg" />
     <van-button type="primary" @click="changeMsg">改变</van-button>
     <van-button type="default" @click="goAbout">跳转About</van-button>
+    <div>counterStore: {{ count }}</div>
+    <van-button type="primary" @click="increase">增加</van-button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, getCurrentInstance } from "vue";
+import { defineComponent, ref, getCurrentInstance, computed } from "vue";
 import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { useCounterStore } from "@/pinia/index";
 
 export default defineComponent({
   name: "Home",
@@ -23,7 +26,17 @@ export default defineComponent({
     const goAbout = () => {
       // router.push("/about");
     };
-    return { changeMsg, msg, goAbout };
+    const counterStore = useCounterStore();
+
+    const count = computed(() => {
+      return counterStore.count;
+    });
+
+    const increase = () => {
+      counterStore.increment();
+    };
+
+    return { changeMsg, msg, goAbout, count, increase };
   },
 });
 </script>
